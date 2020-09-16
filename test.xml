@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<website>
+  <connection>
+    <type>mysql</type>
+    <ip>127.0.0.1</ip>
+    <port>3306</port>
+    <database>test</database>
+    <username>root</username>
+    <password>123456</password>
+    <attribute>
+      <item><name>useSSL</name><value>false</value></item>
+    </attribute>
+  </connection>
+  <database>
+    <table>
+      <name>user</name>
+      <description/>
+      <key>
+        <name>id</name>
+        <type>bigint</type>
+        <length>20</length>
+        <primarykey>Y</primarykey>
+        <null>N</null>
+        <autoincrement>Y</autoincrement>
+        <description>id</description>
+      </key>
+      <key>
+        <name>name</name>
+        <type>varchar</type>
+        <length>200</length>
+        <description>用户姓名</description>
+        <null>N</null>
+      </key>
+      <key>
+        <name>password</name>
+        <type>varchar</type>
+        <length>200</length>
+        <description>密码</description>
+        <null>Y<null>
+      </key>
+    </table>
+  </database>
+</website>
