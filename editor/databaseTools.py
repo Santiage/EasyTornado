@@ -10,8 +10,6 @@ class dbTools:
         # 判断参数是否齐全
         if ('host' not in database.keys() or 'databasename' not in database.keys() or 'username' not in database.keys()):
             return False, None
-       
-
 
         # 用于生成xml的字典变量
         dbinfo = {}

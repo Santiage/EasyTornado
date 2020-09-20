@@ -10,115 +10,103 @@
     <port>8000</port>
   </listener>
 
-  <database>
-    <type>mysql</type>
-    <host>127.0.0.1</host>
-    <port>3306</port>
-    <name>test</name>
-    <username>root</username>
-    <password>123456</password>
-    <attributes>
-      <attribute>
-        <name>useSSL</name>
-        <value>False</value>
-      </attribute>
-    </attributes>
-
-    <schema>
-      <name>test</name>
-      <table>
-        <name>t_user</name>
-        <description>用户名表</description>
-        <fields>
-          <field>
-            <name>id</name>
-            <fieldname>id</fieldname>
-            <type>bigint</type>
-            <length>20</length>
-            <primary_key>1</primary_key>
-            <auto_increment>1</auto_increment>
-            <description>id</description>
-            <null>0</null>
-          </field>
-          <field>
-            <name>username</name>
-            <fieldname>username</fieldname>
-            <type>varchar</type>
-            <length>100</length>
-            <null>0</null>
-            <description>用户名称</description>
-          </field>
-          <field>
-            <name>password</name>
-            <fieldname>password</fieldname>
-            <type>varchar</type>
-            <length>100</length>
-            <null>0</null>
-            <description>用户密码</description>
-          </field>
-          <field>
-            <name>sex</name>
-            <fieldname>sex</fieldname>
-            <type>varchar</type>
-            <length>100</length>
-            <null>1</null>
-            <description>用户性别</description>
-          </field>
-          <field>
-            <name>create_time</name>
-            <fieldname>createTime</fieldname>
-            <type>datatime</type>
-            <null>1</null>
-            <description>创建时间</description>
-          </field>
-          <field>
-            <name>create_user</name>
-            <fieldname>createUser</fieldname>
-            <type>bigint</type>
-            <length>20</length>
-            <null>1</null>
-            <description>创建用户</description>
-          </field>
-        </fields>
-      </table>
-      <table>
-        <fields>
-          <field>
-            <name>id</name>
-            <fieldname>id</fieldname>
-            <type>bigint</type>
-            <length>20</length>
-            <primary_key>1</primary_key>
-            <auto_increment>1</auto_increment>
-            <description>id</description>
-            <null>0</null>
-          </field>
-          <field>
-            <name>code</name>
-            <fieldname>code</fieldname>
-            <type>bigint</type>
-            <length>20</length>
-            <null>0</null>
-            <description>编码</description>
-          </field>
-          <field>
-            <name>value</name>
-            <fieldname>value</fieldname>
-            <type>varchar</type>
-            <length>200</length>
-            <null>0</null>
-            <description>值</description>
-          </field>
-          <field>
-            <name>group</name>
-            <fieldname>group</fieldname>
-            <type>varchar</type>
-            <length>100</length>
-            <null>0</null>
-            <description>字典组</description>
-          </field>
-        </fields>
-      </table>
+  <database type="dict">
+    <type type="str">mysql</type>
+    <host type="str">172.16.8.7</host>
+    <databasename type="str">test</databasename>
+    <username type="str">root</username>
+    <schema type="list">
+        <item type="dict">
+            <name type="str">t_dict</name>
+            <comment type="str">字典表</comment>
+            <fields type="list">
+                <item type="dict">
+                    <name type="str">id</name>
+                    <type type="str">bigint</type>
+                    <length type="str">20</length>
+                    <primary_key type="int">1</primary_key>
+                    <description type="str">ID</description>
+                </item>
+                <item type="dict">
+                    <name type="str">code</name>
+                    <type type="str">bigint</type>
+                    <length type="str">20</length>
+                    <primary_key type="int">0</primary_key>
+                    <description type="str">编码</description>
+                </item>
+                <item type="dict">
+                    <name type="str">value</name>
+                    <type type="str">varchar</type>
+                    <length type="str">200</length>
+                    <primary_key type="int">0</primary_key>
+                    <description type="str">值</description>
+                </item>
+                <item type="dict">
+                    <name type="str">group</name>
+                    <type type="str">varchar</type>
+                    <length type="str">100</length>
+                    <primary_key type="int">0</primary_key>
+                    <description type="str">字典组</description>
+                </item>
+            </fields>
+        </item>
+        <item type="dict">
+            <name type="str">t_user</name>
+            <comment type="str">用户表</comment>
+            <fields type="list">
+                <item type="dict">
+                    <name type="str">id</name>
+                    <type type="str">bigint</type>
+                    <length type="str">20</length>
+                    <primary_key type="int">1</primary_key>
+                    <description type="str">id</description>
+                </item>
+                <item type="dict">
+                    <name type="str">username</name>
+                    <type type="str">varchar</type>
+                    <length type="str">100</length>
+                    <primary_key type="int">0</primary_key>
+                    <description type="str">用户名称</description>
+                </item>
+                <item type="dict">
+                    <name type="str">password</name>
+                    <type type="str">varchar</type>
+                    <length type="str">100</length>
+                    <primary_key type="int">0</primary_key>
+                    <description type="str">用户密码</description>
+                </item>
+                <item type="dict">
+                    <name type="str">sex</name>
+                    <type type="str">bigint</type>
+                    <length type="str">20</length>
+                    <primary_key type="int">0</primary_key>
+                    <description type="str">用户性别</description>
+                </item>
+                <item type="dict">
+                    <name type="str">create_time</name>
+                    <type type="str">datetim</type>
+                    <length type="str">datetim</length>
+                    <primary_key type="int">0</primary_key>
+                    <description type="str">创建时间</description>
+                </item>
+                <item type="dict">
+                    <name type="str">create_user</name>
+                    <type type="str">bigint</type>
+                    <length type="str">20</length>
+                    <primary_key type="int">0</primary_key>
+                    <description type="str">用户ID</description>
+                </item>
+            </fields>
+        </item>
     </schema>
   </database>
+
+  <api access="restful">
+    <name>login</name>
+    <ur>/api/</url>
+    <type>get</type>
+    <headers></headers>
+    <args></args>
+  </api>
+
 </webservice>
