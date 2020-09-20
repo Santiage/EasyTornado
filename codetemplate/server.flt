@@ -1,0 +1,114 @@
+# -*- coding: utf-8 -*-
+
+#################################################
+# 
+# 
+# 
+# 
+#################################################
+
+import tornado.httpserver
+import tornado.ioloop
+import tornado.web
+import tornado.log
+import logging
+import os,sys,getopt
+
+from tornado.options import define, options
+from tornado.web import RedirectHandler
+
+{% for api in apis %}
+from {api.package} import {api.classname}
+{% endfor %}
+
+# 设置服务监听端口
+define("port", default=8000, help="server listen port", type=int)
+# 设置是否开启debug模式
+define("debug", default=True, help="switch debug mode")
+# 设置数据库访问配置
+define("database", default={}, type=dict, multiple=False, help="settings of database")
+
+
+
+
+def helper():
+    return f'''
+        server.py -conf/-c <settings file path>
+    '''
+def welcome():
+    return f'''
+
+    '''
+
+
+def processArgs(args):
+    print(args)
+    if args is None or len(args) == 0:
+        return
+    try:
+        opts, args = getopt.getopt(argv, "hc:p:h", ["conf=","port=","help"])
+    except getopt.GetoptError:
+        print(helper())
+    
+    for opt, arg in opts:
+        if opt in ('-h', '--help'):
+            # 打印帮助信息
+            print(helper())
+            sys.exit()
+        elif opt in ("-c", "--conf"):
+            # 设置配置文件路径
+            conf = arg
+            options.parse_config_file(arg)
+        else:
+            pass
+
+class LogFormatter(tornado.log.LogFormatter):
+    def __init__(self):
+        super(LogFormatter, self).__init__(
+            fmt='%(color)s[%(asctime)s %(filename)s:%(funcName)s:%(lineno)d %(levelname)s]%(end_color)s %(message)s',
+            datefmt='%Y-%m-%d %H:%M:%S'
+        )
+
+class Application(tornado.web.Application):
+    _middleware_list = { middleware_list }
+    _routes = [
+        {% for api in apis %}
+        tornado.web.url(r'{api.url}', {api.classname}, dict(middleware=_middleware_list)),
+        {% endfor %}
+    ]
+
+    def __init__ (self):
+        settings = {
+            "debug": options.debug,
+            "autoescape": "xhtml_escape",
+            "websocket_ping_interval": None,
+            "autoreload": True,
+            "compiled_template_cache": True,
+            "static_hash_cache": False,
+            "serve_traceback": True
+        }
+
+        setup_swagger(
+            self._routes,
+            swagger_url = "/swagger-ui",
+            description = "",
+            api_version = "1.0.0.",
+            title = { swagger_title },
+            contact = dict(name={ username }, email={ useremail }, url="")
+        )
+        super(Application, self).__init__(self._routes, **settings)
+
+
+if __name__ == '__main__':
+    # 接收参数
+    processArgs(sys.argv[1:])
+
+    # 打印欢迎信息
+    print(welcome())
+
+
+    app = Application()
+    [i.setFormatter(LogFormatter()) for i in logging.getLogger().handlers]
+    http_server = tornado.httpserver.HTTPServer(app)
+    http_server.listen(options.port)
+    tornado.ioloop.IOLoop.instance().start()
